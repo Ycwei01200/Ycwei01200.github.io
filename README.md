@@ -6,7 +6,7 @@
 - Course:  Data Structure / Linear Algebra  <br>
 <br> **Brief depiction**: <br>
 - a transfer student <br>
-- My recent plan: Pass the CPE test <br>
+- My recent plan: Pass the CPE test(finished) <br>
 - I'm a foodie.<br>
 # Purpose <br>
 - This GitHub repo was created to help me pass the Data Structure course.<br>
