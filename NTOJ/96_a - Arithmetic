@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int a, b;
+    char op;
+    
+    // 讀入格式 a op b，中間有空白
+    if (scanf("%d %c %d", &a, &op, &b) != 3) {
+        printf("ERROR\n");
+        return 0;
+    }
+
+    switch (op) {
+        case '+':
+            printf("%d + %d = %d\n", a, b, a + b);
+            break;
+        case '-':
+            printf("%d - %d = %d\n", a, b, a - b);
+            break;
+        case '*':
+            printf("%d * %d = %d\n", a, b, a * b);
+            break;
+        case '/':
+            if (b == 0) {
+                printf("ERROR\n");
+            } else {
+                printf("%d / %d = %d ... %d\n", a, b, a / b, a % b);
+            }
+            break;
+        default:
+            printf("ERROR\n");
+            break;
+    }
+
+    return 0;
+}
