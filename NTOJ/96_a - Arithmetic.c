@@ -4,7 +4,7 @@ int main() {
     int a, b;
     char op;
     
-    // 讀入格式 a op b，中間有空白
+    
     if (scanf("%d %c %d", &a, &op, &b) != 3) {
         printf("ERROR\n");
         return 0;
