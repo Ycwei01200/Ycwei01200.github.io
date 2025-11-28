@@ -84,7 +84,7 @@ public:
         }
     }
 
-    void gaussian_elimination(ld matrix[100][100]){
+    void gaussian_elimination(ld matrix[100][100]){//高斯消去法
         int pivot_row = 0;
         
         for (int col = 0; col < num_cols && pivot_row < num_rows; col++) {
@@ -121,40 +121,6 @@ public:
             pivot_row++;
         }
     }
-    /*
-    void check_solution(double matrix[50][50]){
-        
-        for(int i=0; i<num_rows; i++){
-            double b_value = matrix[i][num_cols-1];
-            if (fabs(b_value) < 1e-9) continue;
-
-            bool all_zeros = true; 
-
-            for (int j = 0; j < num_cols - 1; j++) {
-                if (fabs(matrix[i][j]) > 1e-9) {
-                    all_zeros = false; 
-                    break; 
-                }
-            }
-            
-            if (all_zeros&& fabs(b_value) != 0) {
-                cout << "No solution" << endl;
-                return; 
-            }
-        }
-        int rank_num = rank_calc(matrix);
-        
-        if(rank_num == num_cols - 1 ){
-            for(int i=0;i<num_rows;i++){
-                cout<<"x"<<i+1<<" = "<<matrix[i][num_cols-1]<<endl;
-            }
-        }
-        else{
-            cout<<"Infinitely many solutions"<<endl;
-        }
-        
-    }
-        */
  
 void check_solution(ld matrix[100][100]){
     // 先檢查是否有 0 = b (b≠0) 的情況 (無解)
