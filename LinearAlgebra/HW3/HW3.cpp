@@ -123,11 +123,11 @@ public:
     }
  
 void check_solution(ld matrix[100][100]){
-    // 先檢查是否有 0 = b (b≠0) 的情況 (無解)
+    
     for(int i=0; i<num_rows; i++){
         bool all_zeros = true;
         
-        for(int j=0; j<num_cols-1; j++){  // 檢查係數部分
+        for(int j=0; j<num_cols-1; j++){  
             if(fabs(matrix[i][j]) > 1e-9){
                 all_zeros = false;
                 break;
@@ -142,7 +142,7 @@ void check_solution(ld matrix[100][100]){
     }
     
     int rank_num = rank_calc(matrix);
-    int num_variables = num_cols - 1;  // 變數個數 = 總行數 - 1(常數項)
+    int num_variables = num_cols - 1;  
     
     if(rank_num == num_variables){
         // 唯一解:找出每個主元所在的列
@@ -150,7 +150,7 @@ void check_solution(ld matrix[100][100]){
         for(int var=0; var<num_variables; var++){
             // 找到第 var 行的主元所在列
             for(int row=0; row<num_rows; row++){
-                if(fabs(matrix[row][var] - 1.0) < 1e-9){  // 主元應該是1
+                if(fabs(matrix[row][var] - 1.0) < 1e-9){  
                     double val = matrix[row][num_cols-1];
                     if(fabs(val) < 1e-9) val = 0;
                     cout << "x" << var+1 << " = " << val << endl;
