@@ -36,7 +36,7 @@ public:
     }
     void read_csv(ld matrix[100][100]){
         ifstream in;
-        in.open("matrix.csv");
+        in.open("matrix(1).csv");
         if(!in.is_open()){
             cout<<"Wrong archive"<<endl;
             return;
