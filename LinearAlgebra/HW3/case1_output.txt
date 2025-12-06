@@ -1,0 +1,8 @@
+1	0	0	0	0
+0	1	0	0	0
+0	0	1	0	0
+0	0	0	1	0
+0	0	0	0	1
+Rank(A)=4
+Rank(Ab)=5
+Not consistent

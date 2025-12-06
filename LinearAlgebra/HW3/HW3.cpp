@@ -1,10 +1,11 @@
 /*
-    * description: HW4 program which translates a matrix into its row echelon form by Gaussian elimination.
-    * developer: <Yucheng-Wei> s1131556@mail.yzu.edu.tw
-    * development history: 
-    *    2025/11/27: created file.
-    *    2025/11/28 11:32:modified read.csv and matrix_print function to fit the requirement.
-    *    2025/11/28 22:50: added rank calculation and solution checking function.
+ * description: HW4 program which translates a matrix into its row echelon form by Gaussian elimination.
+ * developer: <Yucheng-Wei> s1131556@mail.yzu.edu.tw
+ * development history: 
+ * 2025/11/27: created file.
+ * 2025/11/28 11:32: modified read.csv and matrix_print function to fit the requirement.
+ * 2025/11/28 22:50: added rank calculation and solution checking function.
+ * 2025/12/06: fixed I/O format and solution output order.
 */
 #include<iostream>
 #include<sstream>
@@ -19,12 +20,13 @@ class matrix_solve{
 public:
     int num_rows = 0;
     int num_cols = 0;
-    
-    int rank_calc(ld matrix[100][100]){
+ 
+    int rank_calc(ld matrix[100][100], int col_limit){
         int rank = 0;
         for(int i=0; i<num_rows; i++){
             bool non_zero_row = false;
-            for(int j=0; j<num_cols-1; j++){
+           
+            for(int j=0; j<col_limit; j++){
                 if(fabs(matrix[i][j]) > 1e-9){
                     non_zero_row = true;
                     break;
@@ -34,9 +36,10 @@ public:
         }
         return rank;
     }
+
     void read_csv(ld matrix[100][100]){
         ifstream in;
-        in.open("matrix.csv");
+        in.open("case3_input.csv");
         if(!in.is_open()){
             cout<<"Wrong archive"<<endl;
             return;
@@ -50,6 +53,8 @@ public:
             string val_str;
 
             while(getline(ss, val_str, ',')){ 
+               
+                if (!val_str.empty() && val_str.back() == '\r') val_str.pop_back();
                 matrix[num_rows][current_col_index] = stod(val_str);
                 
                 current_col_index++;
@@ -63,29 +68,9 @@ public:
         in.close();
     }
 
-    void matrix_print_aug(ld matrix[100][100]){
-        for(int i=0; i<num_rows; i++){
-            for(int j=0; j<num_cols; j++){
-                ld val = matrix[i][j];
-                if(fabs(val) < 1e-9) val = 0;
-                cout << val << " ";
-            }
-            cout<<endl;
-        }
-    }
-    void matrix_print(ld matrix[100][100]){
-        for(int i=0; i<num_rows; i++){
-            for(int j=0; j<num_cols-1; j++){
-                ld val = matrix[i][j];
-                if(fabs(val) < 1e-9) val = 0;
-                cout << val << " ";
-            }
-            cout<<endl;
-        }
-    }
-
-    void gaussian_elimination(ld matrix[100][100]){//高斯消去法
+    void gaussian_elimination(ld matrix[100][100]){
         int pivot_row = 0;
+        
         
         for (int col = 0; col < num_cols && pivot_row < num_rows; col++) {
             int max_row = pivot_row;
@@ -118,74 +103,109 @@ public:
                     }
                 }
             }
+          
             pivot_row++;
         }
     }
- 
-void check_solution(ld matrix[100][100]){
-    
-    for(int i=0; i<num_rows; i++){
-        bool all_zeros = true;
+
+
+    void write_output(ld matrix[100][100]){
+        ofstream out("case3_output.txt"); 
+        if(!out.is_open()) return;
+
         
-        for(int j=0; j<num_cols-1; j++){  
-            if(fabs(matrix[i][j]) > 1e-9){
-                all_zeros = false;
-                break;
+        for(int i=0; i<num_rows; i++){
+            for(int j=0; j<num_cols; j++){
+                ld val = matrix[i][j];
+                if(fabs(val) < 1e-9) val = 0; 
+                out << val;
+                if(j < num_cols-1) out << "\t";
             }
+            out << endl;
         }
+
+       
+        int rank_A = rank_calc(matrix, num_cols - 1);
         
-        // 如果係數全為0,但常數項不為0 → 無解
-        if(all_zeros && fabs(matrix[i][num_cols-1]) > 1e-9){
-            cout << "No solution" << endl;
-            return;
+        int rank_Ab = rank_calc(matrix, num_cols);
+
+        out << "Rank(A)=" << rank_A << endl;
+        out << "Rank(Ab)=" << rank_Ab << endl;
+
+        
+        if(rank_A != rank_Ab){
+            out << "Not consistent";
         }
-    }
-    
-    int rank_num = rank_calc(matrix);
-    int num_variables = num_cols - 1;  
-    
-    if(rank_num == num_variables){
-        // 唯一解:找出每個主元所在的列
-        cout << "Unique solution:" << endl;
-        for(int var=0; var<num_variables; var++){
-            // 找到第 var 行的主元所在列
-            for(int row=0; row<num_rows; row++){
-                if(fabs(matrix[row][var] - 1.0) < 1e-9){  
-                    double val = matrix[row][num_cols-1];
-                    if(fabs(val) < 1e-9) val = 0;
-                    cout << "x" << var+1 << " = " << val << endl;
-                    break;
+        else{
+            int num_variables = num_cols - 1;
+            if(rank_A == num_variables){
+                out << "Consistent" << endl;
+                for(int var=0; var<num_variables; var++){
+                    for(int row=0; row<num_rows; row++){
+                        if(fabs(matrix[row][var] - 1.0) < 1e-9){
+                            double val = matrix[row][num_cols-1];
+                            if(fabs(val) < 1e-9) val = 0;
+                      
+                            out << "x" << var+1 << "=" << val << endl;
+                            break;
+                        }
+                    }
+                }
+            }
+            else{
+                out << "Consistent" << endl;
+                int n_vars = num_cols - 1; 
+                for(int i = 0; i < num_rows; i++){
+                    int pivot_col = -1;
+                    for(int j = 0; j < n_vars; j++){
+                        if(fabs(matrix[i][j] - 1.0) < 1e-9){
+                            pivot_col = j;
+                            break; 
+                        }
+                    }
+                    if(pivot_col == -1) continue;
+                    out << "x" << pivot_col + 1 << "=";
+                    double constant = matrix[i][num_cols - 1];
+                    bool has_printed = false; 
+                    if(fabs(constant) > 1e-9){
+                        out << constant;
+                        has_printed = true;
+                    }
+                    for(int j = pivot_col + 1; j < n_vars; j++){
+                        double coeff = matrix[i][j];
+                        if(fabs(coeff) > 1e-9){
+                            double rhs_val = -coeff; 
+                            if(rhs_val > 0 && has_printed){
+                                out << "+";
+                            }
+                            if(fabs(rhs_val + 1.0) < 1e-9) out << "-"; 
+                            else if(fabs(rhs_val - 1.0) < 1e-9) { } 
+                            else out << rhs_val; 
+                            out << "x" << j + 1;
+                            has_printed = true;
+                        }
+                    }
+
+                    if(!has_printed){
+                        out << "0";
+                    }
+
+                    out << endl;
                 }
             }
         }
+        out.close();
     }
-    else{
-        cout << "Infinitely many solutions" << endl;
-    }
-}
-
-
 };
 
 int main() {
     ios::sync_with_stdio(0), cin.tie(0);
     matrix_solve solver;
     ld matrix[100][100]={};
+    
     solver.read_csv(matrix);
-    cout<<"-----------------"<<endl;
-    cout<<"Before Gaussian elimination:augmented version"<<endl;
-    solver.matrix_print_aug(matrix);
-    cout<<"Before Gaussian elimination:non-augmented version"<<endl;
-    solver.matrix_print(matrix);
-    cout<<"-----------------"<<endl;
     solver.gaussian_elimination(matrix);
-    cout<<"-----------------"<<endl;
-    cout<<"After Gaussian elimination:augmented version"<<endl;
-    solver.matrix_print_aug(matrix);
-    cout<<"After Gaussian elimination:non-augmented version"<<endl;
-    solver.matrix_print(matrix);
-    cout<<"-----------------"<<endl;
-    solver.check_solution(matrix);
+    solver.write_output(matrix); 
 
     return 0;
 }
