@@ -6,6 +6,7 @@
 
 | 題號 | 題目名稱 | 程式碼 |
 | ---- | -------- | ------ |
+| 000 | [template](https://leetcode.com/problems/add-strings/) | [Code](000.template.md) |
 | 09 | [Palindrome Number](https://leetcode.com/problems/palindrome-number/) | [Code](09.Palindrome%20Number.md) |
 | 13 | [Roman to Integer](https://leetcode.com/problems/roman-to-integer/) | [Code](13.%20Roman%20to%20Integer.md) |
 | 14 | [Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | [Code](14.%20Longest%20Common%20Prefix.md) |
@@ -57,9 +58,10 @@
 | 412 | [Fizz Buzz](https://leetcode.com/problems/fizz-buzz/) | [Code](412.%20Fizz%20Buzz.md) |
 | 414 | [Third Maximum Number](https://leetcode.com/problems/third-maximum-number/) | [Code](414.%20Third%20Maximum%20Number.md) |
 | 415 | [Add Strings](https://leetcode.com/problems/add-strings/) | [Code](415.%20Add%20Strings.md) |
+| 434 | [Number of Segments in a String](https://leetcode.com/problems/number-of-segments-in-a-string/) | [Code](434.%20Number%20of%20Segments%20in%20a%20String.md) |
 
 ---
 
-**總共 51 題**
+**總共 53 題**
 
 > 點擊題目名稱可前往 LeetCode 查看題目，點擊 Code 可查看程式碼。
