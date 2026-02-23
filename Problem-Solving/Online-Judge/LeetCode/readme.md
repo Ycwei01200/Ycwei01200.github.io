@@ -59,9 +59,10 @@
 | 414 | [Third Maximum Number](https://leetcode.com/problems/third-maximum-number/) | [Code](414.%20Third%20Maximum%20Number.md) |
 | 415 | [Add Strings](https://leetcode.com/problems/add-strings/) | [Code](415.%20Add%20Strings.md) |
 | 434 | [Number of Segments in a String](https://leetcode.com/problems/number-of-segments-in-a-string/) | [Code](434.%20Number%20of%20Segments%20in%20a%20String.md) |
+| 441 | [Arranging Coins](https://leetcode.com/problems/arranging-coins/) | [Code](441.%20Arranging%20Coins.md) |
 
 ---
 
-**總共 53 題**
+**總共 54 題**
 
 > 點擊題目名稱可前往 LeetCode 查看題目，點擊 Code 可查看程式碼。
